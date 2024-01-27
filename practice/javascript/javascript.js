@@ -34,3 +34,17 @@
 // 10)check to see if a value is less than 10 and greater than 0
     const o = 8;
     console.log(o <= 10, o >= 0)
+
+let names = ['Nancy','Blessing','Jorge','Svetlana','Bob'];
+
+let namesB = names.filter(name => name.charAt(0) === 'B');  // easy way 
+
+function filterItems(arr, query) {
+    return arr.filter((el) => el.toLowerCase().includes(query.toLowerCase())); // hard way
+}
+
+console.log(filterItems(names, "b"));
+
+let nameLengths = names.map((name) => name.length);
+
+names.reduce((total, name) => total + name.length, 0) / names.Lengths;
