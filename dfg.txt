@@ -1,0 +1,217 @@
+// Define the config we'll need for our Api request
+var url = 'https://graphql.anilist.co';
+
+const animeElement = document.getElementById("selection"); // Corrected ID
+const animeSelect = document.getElementById("anime"); // Corrected ID
+
+const animeList = {
+    "Ascendance of a Bookworm": 8425,
+    "Sword Art Online": 11757,
+    "Twin Star Exorcists": 21499, // Corrected typo
+    "GOSICK": 97940,
+    "Demon Slayer": 101922,
+    "Spy X Family": 140960,
+    "Solo Leveling": 151807,
+    "That Time I Got Reincarnated as a Slime": 101280,
+    "Black Clover": 108268,
+    "Clannad": 2167
+};
+
+// Populate the select options
+Object.keys(animeList).forEach(title => {
+    const option = document.createElement('option');
+    option.value = animeList[title];
+    option.textContent = title;
+    animeSelect.appendChild(option);
+});
+
+animeSelect.addEventListener('change', () => {
+    const selectedId = animeSelect.value;
+    fetchAnime(selectedId);
+});
+
+function fetchAnime(id) {
+    var options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            query: `
+                query ($id: Int) {
+                    Media (id: $id, type: ANIME) {
+                        id
+                        title {
+                            romaji
+                            english
+                            native
+                        }
+                        coverImage {
+                            large
+                        }
+                    }
+                }
+            `,
+            variables: {
+                id: parseInt(id)
+            }
+        })
+    };
+
+    fetch(url, options)
+        .then(handleResponse)
+        .then(displayAnime)
+        .catch(handleError);
+}
+
+function handleResponse(response) {
+    return response.json().then(function (json) {
+        return response.ok ? json : Promise.reject(json);
+    });
+}
+
+function displayAnime(data) {
+    if (data && data.data && data.data.Media) {
+        const anime = data.data.Media;
+        const article = document.createElement('article');
+        const h3 = document.createElement('h3');
+        h3.textContent = anime.title.romaji;
+        const img = document.createElement('img');
+        img.src = anime.coverImage.large;
+        img.alt = anime.title.english || anime.title.native;
+        article.appendChild(h3);
+        article.appendChild(img);
+        animeElement.innerHTML = ''; // Clear previous content
+        animeElement.appendChild(article);
+    } else {
+        console.error('Error: Invalid response data format');
+    }
+}
+
+function handleError(error) {
+    alert('Error, check console');
+    console.error(error);
+}
+
+
+
+
+
+
+
+
+
+
+// Define the config we'll need for our Api request
+var url = 'https://graphql.anilist.co';
+
+const animeElement = document.getElementById("selection"); // Corrected ID
+const animeSelect = document.getElementById("anime"); // Corrected ID
+
+const animeList = {
+    "Ascendance of a Bookworm": 108268,
+    "Sword Art Online": 11757,
+    "Twin Star Exorcists": 21499, // Corrected typo
+    "GOSICK": 8425,
+    "Demon Slayer": 101922,
+    "Spy X Family": 140960,
+    "Solo Leveling": 151807,
+    "That Time I Got Reincarnated as a Slime": 101280,
+    "Black Clover": 97940,
+    "Clannad": 2167
+};
+
+// Populate the select options
+Object.keys(animeList).forEach(title => {
+    const option = document.createElement('option');
+    option.value = animeList[title];
+    option.textContent = title;
+    animeSelect.appendChild(option);
+});
+
+animeSelect.addEventListener('change', () => {
+    const selectedId = animeSelect.value;
+    fetchAnime(selectedId);
+});
+
+function fetchAnime(id) {
+    var options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            query: `
+                query ($id: Int) {
+                    Media (id: $id, type: ANIME) {
+                        id
+                        title {
+                            romaji
+                            english
+                            native
+                        }
+                        startDate {
+                            year
+                            month
+                            day
+                        }
+                        endDate {
+                            year
+                            month
+                            day
+                        }
+                        status
+                        episodes
+                        duration
+                        genres
+                        averageScore
+                        popularity
+                        source
+                        coverImage {
+                            large
+                        }
+                    }
+                }
+            `,
+            variables: {
+                id: parseInt(id)
+            }
+        })
+    };
+
+    fetch(url, options)
+        .then(handleResponse)
+        .then(displayAnime)
+        .catch(handleError);
+}
+
+function handleResponse(response) {
+    return response.json().then(function (json) {
+        return response.ok ? json : Promise.reject(json);
+    });
+}
+
+function displayAnime(data) {
+    if (data && data.data && data.data.Media) {
+        const anime = data.data.Media;
+        const article = document.createElement('article');
+        const h3 = document.createElement('h3');
+        h3.textContent = anime.title.romaji;
+        const img = document.createElement('img');
+        img.src = anime.coverImage.large;
+        img.alt = anime.title.english || anime.title.native;
+        article.appendChild(h3);
+        article.appendChild(img);
+        animeElement.innerHTML = ''; // Clear previous content
+        animeElement.appendChild(article);
+    } else {
+        console.error('Error: Invalid response data format');
+    }
+}
+
+function handleError(error) {
+    alert('Error, check console');
+    console.error(error);
+}
