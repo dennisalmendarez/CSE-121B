@@ -76,8 +76,6 @@ async function fetchAnimeData() {
     }
     console.log(animeList);
     renderAnimeList();
-    
-    // document.querySelector("#anime").addEventListener("change", () => { filterAnimes(animeList)});
 }
 
 function handleResponse(response) {
