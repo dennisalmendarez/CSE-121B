@@ -74,7 +74,7 @@ async function fetchAnimeData() {
             handleError(error);
         }
     }
-    console.log(animeList);
+    // console.log(animeList);
     renderAnimeList();
 }
 
@@ -87,7 +87,7 @@ function handleResponse(response) {
 
 function handleData(data) {
     animeList.push(data);
-    console.log(data);
+    // console.log(data);
 }
 
 function handleError(error) {
